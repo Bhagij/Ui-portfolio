@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Registration form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        function amountBlur(){
+            var len=document.getElementById("txtAmount").value.length;
+            if(len>3){
+                document.getElementById("btnRegister").disabled=false;
+                document.getElementById("error").style.display="none";
+            }
+            else {
+                document.getElementById("btnRegister").disabled=true;
+                document.getElementById("error").style.display="block";
+            }
+        }
+        function registerClick(){
+            document.getElementById("name").innerHTML=document.getElementById("txtName").value;
+            document.getElementById("inDate").innerHTML=document.getElementById("txtDate").value;
+            var noOfDays=document.getElementById("txtDays").value;
+            document.getElementById("noofDays").innerHTML=noOfDays;
+            var noOfPersons=document.getElementById("txtPersons").value;
+            document.getElementById("noofPersons").innerHTML=noOfPersons;
+            var optDeluxe=document.getElementById("optDeluxe");
+            var optSuite=document.getElementById("optSuite");
+            var optRoom=document.getElementById("optRoom");
+            var roomCost=0;
+            if(optDeluxe.checked){
+                optRoom.innerHTML=optDeluxe.value;
+                roomCost=2500;
+            }
+            if(optSuite.checked){
+                optRoom.innerHTML=optSuite.value;
+                roomCost=4000;
+            }
+            var optAc=document.getElementById("optAC");
+            var optLocker=document.getElementById("optLocker");
+            var optAmenities="";
+            var amenitiesCost=0;
+            if(optAc.checked){
+                optAmenities += optAc.value+"<br>";
+                amenitiesCost += 1000;
+            }
+            if(optLocker.checked){
+                optAmenities += optLocker.value;
+                amenitiesCost += 300;
+            }
+            document.getElementById("optAmenities").innerHTML=optAmenities;
+            var advAmount=document.getElementById("txtAmount").value;
+            document.getElementById("advAmount").innerHTML=advAmount;
+            var total=(roomCost+amenitiesCost)*noOfDays*noOfPersons;
+            var balAmount=total-advAmount;
+            if(noOfPersons>2){
+                balAmount +=1000*(noOfPersons-2);
+            }
+            var rc=roomCost*noOfDays*noOfPersons;
+            var ac=amenitiesCost*noOfDays*noOfPersons;
+            var pc=1000*(noOfPersons-2);
+            document.getElementById("balAmount").innerHTML=balAmount;
+            document.getElementById("billProcess").innerHTML=`Room Cost=${rc}<br>Amenities Cost=${ac}<br>For more than 2 persons=${pc}<br>Advance Amount=-${advAmount}<br>Total=${balAmount}`;
+        }
+        function confirmClick(){
+            alert("registered successfully");
+        }
+    </script>
+</head>
+<body class="container-fluid">
+    <header>
+        <h1 class="text-center">Hotel Registration Form</h1>
+    </header>
+    <section>
+        <nav>
+            <ul class="nav nav-tabs fs-5">
+                <li class="nav-item me-5"><a href="#customerInfo" data-bs-toggle="tab" class="nav-link active">Customer Info</a></li>
+                <li class="nav-item me-5"><a href="#roomType" data-bs-toggle="tab" class="nav-link">Select Room Type</a></li>
+                <li class="nav-item me-5"><a href="#amenities" data-bs-toggle="tab" class="nav-link">Select Amenities</a></li>
+                <li class="nav-item me-5"><a href="#advanceAmount" data-bs-toggle="tab" class="nav-link">Advance Amount</a></li>
+                <li class="nav-item me-5"><a href="#summary" data-bs-toggle="tab" class="nav-link">Summary</a></li>
+            </ul>
+        </nav>
+        <div class="tab-content">
+            <div class="tab-pane mt-5 active" id="customerInfo">
+                <dl>
+                    <dt>Customer Name</dt>
+                    <dd><input type="text" id="txtName"></dd>
+                    <dt>Check in Date</dt>
+                    <dd><input type="date" id="txtDate"></dd>
+                    <dt>Total No of Days</dt>
+                    <dd><input type="number" id="txtDays"></dd>
+                    <dt>Total No of Persons</dt>
+                    <dd><input type="number" id="txtPersons"></dd>
+                </dl>
+            </div>
+            <div class="tab-pane mt-5" id="roomType">
+                <div class="row">
+                    <div class="col text-center">
+                        <img src="../public/images/deluxe-room.jpeg" height="300" width="50%">
+                        <div>
+                            <input type="radio" name="room" value="Deluxe Room" id="optDeluxe" class="form-check-input"> <span>Deluxe Room &#8377;2500/-</span>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <img src="../public/images/suite-room.jpeg" height="300" width="50%">
+                        <div>
+                            <input type="radio" name="room" value="Suite Room" id="optSuite" class="form-check-input"> <span>Suite Room &#8377;4000/- Per-day</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane mt-5" id="amenities">
+                <div class="row">
+                    <div class="col text-center">
+                        <img src="../public/images/ac-room.jpeg" height="300" width="50%">
+                        <div>
+                            <input type="checkbox" value="AC Room" id="optAC" class="form-check-input"> <span>A/C Room &#8377;1000/-</span>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <img src="../public/images/locker-room.jpg" height="300" width="50%">
+                        <div>
+                            <input type="checkbox" value="Locker Room" id="optLocker" class="form-check-input"> <span>Locker Room &#8377;300/- Per-day</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="advanceAmount">
+                <div class="row mt-5">
+                    <div class="col h4 text-end">
+                        Advance Amount :
+                    </div>
+                    <div class="col text-start">
+                        <input type="number" onblur="amountBlur()" class="form-control w-50" id="txtAmount">
+                        <div class="text-danger" style="display: block;" id="error">Minimum &#8377;1000 to pay for Registration</div>
+                    </div>
+                </div>
+                <div class="text-center mt-5">
+                    <button class="btn btn-dark text-white" data-bs-target="#register" data-bs-toggle="modal" onclick="registerClick()" disabled id="btnRegister">Register</button>
+                </div>
+                <div class="modal fade" id="register">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3>Your Bill</h3>
+                                <button class="btn btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col fw-bold">Customer Name</div>
+                                    <div class="col">: <span id="name"></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col fw-bold">Check In Date</div>
+                                    <div class="col">: <span id="inDate"></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col fw-bold">Total No of Days</div>
+                                    <div class="col">: <span id="noofDays"></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col fw-bold">Total No of Persons</div>
+                                    <div class="col">: <span id="noofPersons"></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col fw-bold">Room Type</div>
+                                    <div class="col">: <span id="optRoom"></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col fw-bold">Amenities</div>
+                                    <div class="col">: <span id="optAmenities"></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col fw-bold">Advance Amount</div>
+                                    <div class="col">: <span id="advAmount"></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col fw-bold">Balance Amount</div>
+                                    <div class="col">: <span id="balAmount"></span></div>
+                                </div>
+                                <div class="mt-3">
+                                    <h4>Bill Details</h4>
+                                    <div id="billProcess"></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-success" data-bs-dismiss="modal" onclick="confirmClick()">Confirm</button>
+                                <button class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane mt-5" id="summary">
+                <div>
+                    <h3>Details about Room</h3>
+                    <div>Deluxe Room = &#8377; 2500/- </div>
+                    <div>Suite Room = &#8377; 4000/-</div>
+                    <div>A/C Room = &#8377; 1000/-</div>
+                    <div>Locker = &#8377; 300/-</div>
+                    <div><span class="text-danger">Note:</span>The price details are per day for per person</div>
+                    <div class="mt-5">
+                        <h3>Terms & Conditions</h3>
+                        <div>
+                            -> Up to 2 Persons Cost No Change
+                        </div>
+                        <div>
+                            -> for Every extra person 1000 RS on total amount.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
