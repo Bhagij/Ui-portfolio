@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <style>
+        .container{
+            border: 1px solid black;
+        }
+        #metric button{
+            border: 1px solid lightgray;
+            border-radius: 20px;
+        }
+        input::placeholder{
+            text-align: end;
+        }
+        .message{
+            font-size: 12px;
+        }
+        #yourname {
+            margin-top: -5px;
+        }
+    </style>
+    <script type="text/javascript">
+       
+        
+        function calculateClick(){
+            document.getElementById('bmiProgressBar').style.display = 'block';
+            var age=document.getElementById("txtAge").value;
+            var height=parseFloat(document.getElementById("txtHeight").value)/100;
+            var weight=parseFloat(document.getElementById("txtWeight").value);
+            var male=document.getElementById("optMale");
+            var female=document.getElementById("optFemale");
+            var bmi;
+            if(male.checked){
+                bmi=parseFloat((weight/height**2)).toFixed(1);
+            }
+            if(female.checked){
+                bmi=parseFloat((weight/height**2)).toFixed(1);
+            }
+            document.getElementById("bmiresult").innerHTML= + bmi;
+            
+            if(bmi<18.5){
+                document.getElementById("yourweight").innerHTML=`<b>Under Weight BMI</b>`;
+                document.getElementById("yourname").style.marginLeft = '20px';
+            }
+            else if(bmi>=18.5 && bmi<25){
+                document.getElementById("yourweight").innerHTML=`<b>Normal Weight BMI</b>`;
+                document.getElementById("yourname").style.marginLeft = '180px';
+            }
+            else if(bmi>=25 && bmi<30){
+                document.getElementById("yourweight").innerHTML=`<b>Over Weight BMI</b>`;
+                document.getElementById("yourname").style.marginLeft = '300px';
+            }
+            else{
+                document.getElementById("yourweight").innerHTML=`<b>Obese BMI</b>`;
+                document.getElementById("yourname").style.marginLeft = '450px';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="w-50 container mt-5 p-3">
+        <div class="row">
+            <div class="col-6">
+                <h3>BMI calculator</h3>
+            </div>
+            <div class="col-6 text-end">
+                <span class="bi bi-share-fill"></span>
+                <span class="bi bi-three-dots"></span>
+            </div>
+        </div>
+        <hr>
+        <div class="p-3">
+            <div class="row">
+                <div class="col-6">
+                    <input type="radio" name="Gender" id="optMale" class="form-check-input" checked><label class="form-check-label ms-2"> Male</label>
+                    <input type="radio" name="Gender" id="optFemale" class="form-check-input"><label class="form-check-label ms-2">Female</label>
+                </div>
+                <div class="col-6 text-end" id="metric">
+                    <button class="btn">Imperial</button>
+                    <button class="btn btn-primary text-white">Metric</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 mt-4">
+                    Age(1 year or above) <span class="text-danger">*</span>
+                    <input type="text" id="txtAge" placeholder="years" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 mt-4">
+                    Height <span class="text-danger">*</span>
+                    <input type="text" id="txtHeight" placeholder="cm" class="form-control">
+                </div>
+                <div class="col-4 mt-4">
+                    Weight <span class="text-danger">*</span>
+                    <input type="text" id="txtWeight" placeholder="kg" class="form-control">
+                </div>
+            </div>
+            <div>
+                <button class="mt-4 border border-secondary" onclick="calculateClick()">Calculate</button>
+            </div>
+        </div>
+        <hr>
+        <div class="message">
+            <div class="matter ps-3">
+                The body mass index (BMI) calculator estimates the amount of body fat a person has in relation to age, height, and weight.
+            </div>
+            <div style="display:none;" id="bmiProgressBar">
+                <div class="row mt-4">
+                    <div class="col-3">
+                        <h1 id="bmiresult"></h1>
+                    </div>
+                    <div class="col-9">
+                        <div class="row">
+                            <div class="col-3">Under Weight</div>
+                            <div class="col-3">Normal Weight</div>
+                            <div class="col-3">Over Weight</div>
+                            <div class="col-3">Obese</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3"></div>
+                            <div class="col-3"></div>
+                            <div class="col-3"></div>
+                            <div class="col-3"></div>
+                        </div>
+                        <div>
+                            <div class="progress">
+                                <div class="progress-bar w-25 bg-black" id="under"></div>
+                                <div class="progress-bar w-25 bg-info ms-1" id="normal"></div>
+                                <div class="progress-bar w-25 bg-black ms-1" id="over"></div>
+                                <div class="progress-bar w-25 bg-black ms-1" id="obese"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3" id="yourweight"></div>
+                    <div class="col-9">
+                        <div id="yourname">
+                            <span class="bi bi-caret-down-fill"></span>
+                            <div>You</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</body>
+</html>
